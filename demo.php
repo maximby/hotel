@@ -18,12 +18,5 @@ echo '<code><pre>' . var_export($hotel_business, true) . '</pre></code>';
 echo $hotel_business->display();
 
 echo '<br/><br/>';
-$hotel_standard = new HotelStandard(array(
-'hotel_name' => 'Belarus',
-'country_name'=> 'Республика Беларусь',
-'city_name' => 'Минск',
-'street_name' => ' ул. Сторожовская, 15',
-'phone_number' => '+375 (17) 239-77-44',
-));
-
+$hotel_standard = Hotel::load(2);
 echo $hotel_standard->display();
