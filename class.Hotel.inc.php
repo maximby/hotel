@@ -1,6 +1,6 @@
 <?php
 
-class Hotel {
+abstract class Hotel {
 
     const HOTEL_CATEGORY_BUSINESS = 1;
     const HOTEL_CATEGORY_STANDARD = 2;
@@ -43,9 +43,12 @@ class Hotel {
      */
     public function __construct($data = array()) {
         $this->_time_create = time();
+
+        // Проверяем, что объект Hotel может быть заполнен.
         if (!is_array($data)) {
             trigger_error('__construct expects an argument array');
         }
+
         //Если есть хотя бы одно значение, заполняем объект Hotel.
         if (count($data)>0) {
             foreach ($data as $name => $value) {
@@ -83,7 +86,26 @@ class Hotel {
         return $output;
     }
 
-    
+    /**
+     * Допустима ли категория отеля.
+     * @param $hotel_category_id
+     * @return bool
+     */
+    static public function isValidHotelCategoryId($hotel_category_id) {
+        return array_key_exists($hotel_category_id, self::$valid_hotel_category);
+    }
+
+    /**
+     * Задаем индентификатор сатегории отеля, если он допустим
+     * @param int $hotel_category_id
+     */
+    protected function setHotelCategoryId($hotel_category_id) {
+        if (self::isValidHotelCategoryId($hotel_category_id)) {
+            $this->_hotel_category = $hotel_category_id;
+        }
+    }
+
+    abstract protected  function _init();
 
 
 
